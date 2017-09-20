@@ -32,12 +32,12 @@ stages:
       parameters:
         inputfile: {stages: 'merge', output: mergedfile}
         shapevar: {stages: init, output: shapevars, unwrap: true}
-        mcname:  {stages: init, output: shapenames, unwrap: true}
+        mcname:  {stages: init, output: mcname, unwrap: true}
         mcweight: {stages: init, output: mcweight, unwrap: true}
       workflow: {$ref: 'workflow_select_shape.yml'}
       scatter:
         method: zip
-        parameters: [shapevar,mcname]
+        parameters: [shapevar]
 
   - name: select_signal
     dependencies: [merge]

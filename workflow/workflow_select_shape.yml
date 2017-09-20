@@ -34,9 +34,10 @@ stages:
         inputfile: {stages: 'merge', output: mergedfile}
         outputfile: '{workdir}/hist.root'
         name: {stages: init, output: mcname, unwrap: true}
+        shapevar: {stages: init, output: shapevar, unwrap: true}
         weight: {stages: init, output: mcweight, unwrap: true}
         variations: [nominal]
-      step: {$ref: steps.yml#/histogram}
+      step: {$ref: steps.yml#/histogram_shape}
       scatter:
         method: zip
         parameters: [inputfile]

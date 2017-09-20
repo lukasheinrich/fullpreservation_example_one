@@ -9,6 +9,11 @@ def main():
     weight = float(sys.argv[4])
     variations = sys.argv[5].split(',')
 
+    if len(sys.argv) > 6:
+        histtemplate = sys.argv[6]
+    else:
+        histtemplate = '{name}_{variation}'
+
     assert 'nominal' in variations
 
 
@@ -19,7 +24,7 @@ def main():
 
     hists = {}
     for v in variations:
-        h = ROOT.TH1F('{}_{}'.format(name,v),'{}_{}'.format(name,v),50,-5,5)
+        h = ROOT.TH1F(histtemplate.format(name = name,variation = v),'{}_{}'.format(name,v),50,-5,5)
         ROOT.SetOwnership( h, False )
         hists[v] = h
     for event in ntin:

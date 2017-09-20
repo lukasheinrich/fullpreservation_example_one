@@ -11,7 +11,6 @@ stages:
 
         weightvariations: [nominal,weight_var1_up,weight_var1_dn]
         shapevars: [[shape_conv_up],[shape_conv_dn]]
-        shapenames: [shape_conv_up,shape_conv_dn]
       workflow: {$ref: workflow_mc.yml}
       scatter:
         method: zip
