@@ -89,6 +89,21 @@ histogram_shape:
     outputmap:
       outputfile: 'outputfile'
 
+makews:
+  process:
+    process_type: interpolated-script-cmd
+    interpreter: bash
+    script: |
+      source /usr/local/bin/thisroot.sh
+      python /code/makews.py {data_bkg_hists} {workspace_prefix} {xml_dir}
+  environment:
+    environment_type: docker-encapsulated
+    image: dummyanalysis
+  publisher:
+    publisher_type: 'interpolated-pub'
+    glob: True
+    publish:
+      workspace: '{workspace_prefix}*combined*model.root'
 
 merge_root:
   process:
@@ -132,11 +147,31 @@ plot:
     interpreter: bash
     script: |
       source /usr/local/bin/thisroot.sh
-      python plot.py {inputfile} {plotfile}
+      hfquickplot write_vardef {combined_model} combined nominal_vals.yml
+      hfquickplot plot_channel {combined_model} combined channel1 x nominal_vals.yml -c qcd,mc2,mc1,signal -o {prefit_plot}
+      hfquickplot fit {combined_model} combined fitresults.yml
+      hfquickplot plot_channel {combined_model} combined channel1 x fitresults.yml -c qcd,mc2,mc1,signal -o {postfit_plot}
   environment:
     environment_type: docker-encapsulated
     image: dummyanalysis
   publisher:
     publisher_type: 'frompar-pub'
     outputmap:
-      plotfile: 'plotfile'
+      prefit: 'prefit_plot'
+      postfit: 'postfit_plot'
+
+hepdata:
+  process:
+    process_type: interpolated-script-cmd
+    interpreter: bash
+    script: |
+      source /usr/local/bin/thisroot.sh
+      python /code/hepdata_export.py {combined_model}
+      zip {hepdata_submission} submission.yaml data1.yaml
+  environment:
+    environment_type: docker-encapsulated
+    image: dummyanalysis
+  publisher:
+    publisher_type: 'frompar-pub'
+    outputmap:
+      hepdata_submission: 'hepdata_submission'
