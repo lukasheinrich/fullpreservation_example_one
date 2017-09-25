@@ -110,6 +110,7 @@ merge_root:
     process_type: interpolated-script-cmd
     interpreter: bash
     script: |
+      sleep 60
       source /usr/local/bin/thisroot.sh
       cat /parmounts/inputs|sed 's|"||g' |xargs hadd {mergedfile}
   environment:
@@ -128,6 +129,7 @@ merge_root_allpars:
     process_type: interpolated-script-cmd
     interpreter: bash
     script: |
+      sleep 60
       source /usr/local/bin/thisroot.sh
       cat /parmounts/inputs|sed 's|"||g' |xargs hadd {mergedfile}
   environment:
