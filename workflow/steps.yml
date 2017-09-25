@@ -33,7 +33,6 @@ select_mc:
     process_type: interpolated-script-cmd
     interpreter: bash
     script: |
-      sleep 60
       source /usr/local/bin/thisroot.sh
       variations=$(cat /parmounts/variations|sed 's|"||g'|paste -sd , -)
       python /code/select.py {inputfile} {outputfile} {region} $variations
@@ -53,16 +52,8 @@ histogram:
     process_type: interpolated-script-cmd
     interpreter: bash
     script: |
-      sleep 60
       source /usr/local/bin/thisroot.sh
-      echo "mounted vars"
-      cat /parmounts/variations
       variations=$(cat /parmounts/variations|sed 's|"||g'|paste -sd , -)
-      echo "  ]]]"
-      echo "comma vars: $variations"
-      echo "cmdline"
-      echo python /code/histogram.py {inputfile} {outputfile} {name} {weight} $variations
-      sleep 360
       python /code/histogram.py {inputfile} {outputfile} {name} {weight} $variations
   environment:
     environment_type: docker-encapsulated
@@ -80,7 +71,6 @@ histogram_shape:
     process_type: interpolated-script-cmd
     interpreter: bash
     script: |
-      sleep 60
       source /usr/local/bin/thisroot.sh
       variations=$(cat /parmounts/variations|sed 's|"||g'|paste -sd , -)
       name="{name}_$(cat /parmounts/shapevar|sed 's|"||g')"
@@ -120,7 +110,6 @@ merge_root:
     process_type: interpolated-script-cmd
     interpreter: bash
     script: |
-      sleep 60
       source /usr/local/bin/thisroot.sh
       cat /parmounts/inputs|sed 's|"||g' |xargs hadd {mergedfile}
   environment:
@@ -139,7 +128,6 @@ merge_root_allpars:
     process_type: interpolated-script-cmd
     interpreter: bash
     script: |
-      sleep 60
       source /usr/local/bin/thisroot.sh
       cat /parmounts/inputs|sed 's|"||g' |xargs hadd {mergedfile}
   environment:
