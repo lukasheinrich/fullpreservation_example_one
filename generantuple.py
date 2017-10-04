@@ -49,6 +49,8 @@ def main():
     gentype = sys.argv[1]
     nevents = int(sys.argv[2])
     outputfile = sys.argv[3]
+    if len(sys.argv) is 5:
+        random.seed(sys.argv[4])
 
     import ROOT
     import array

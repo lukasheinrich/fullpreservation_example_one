@@ -25,6 +25,8 @@ def main():
     outputfile      = sys.argv[2]
     selection       = sys.argv[3]
     variations      = sys.argv[4].split(',')
+    if len(sys.argv) is 6:
+        random.seed(sys.argv[5])
 
 
     shape_vars =  [x for x in variations if 'shape_' in x]
