@@ -11,7 +11,7 @@ stages:
     scheduler:
       scheduler_type: singlestep-stage
       parameters:
-        nevents: [10000,10000,10000,10000,100000]
+        nevents: [10000,10000,10000,10000,10000]
       workflow: {$ref: workflow_data.yml}
   - name: signal
     scheduler:
