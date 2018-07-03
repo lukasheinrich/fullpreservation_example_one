@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import hftools.hepdata as hft_hepdata
 import yaml
 import sys
